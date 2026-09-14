@@ -1,0 +1,71 @@
+name: Sync to Hugging Face
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "hf-space/**"
+      - "hf-dataset/**"
+      - ".github/workflows/sync-huggingface.yml"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Upload Space and dataset to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE_ID: kondasviktor/vcl-ai-coding-prompts
+          HF_DATASET_ID: kondasviktor/vcl-ai-coding-prompts
+        run: |
+          set -euo pipefail
+          pip install -q huggingface_hub
+          python3 <<'PY'
+          import os, sys
+          from huggingface_hub import HfApi
+          from huggingface_hub.errors import HfHubHTTPError
+
+          token = os.environ["HF_TOKEN"].strip()
+          space_id = os.environ["HF_SPACE_ID"]
+          dataset_id = os.environ["HF_DATASET_ID"]
+          if len(token) < 20:
+              print("::error::HF_TOKEN is missing or too short.")
+              sys.exit(1)
+
+          api = HfApi(token=token)
+          try:
+              api.whoami()
+          except Exception as exc:
+              print(f"::error::HF token auth failed: {exc}")
+              sys.exit(1)
+
+          try:
+              api.create_repo(space_id, repo_type="space", space_sdk="static", exist_ok=True)
+              api.upload_folder(
+                  folder_path="hf-space",
+                  repo_id=space_id,
+                  repo_type="space",
+                  commit_message="Sync Space from GitHub",
+              )
+              print(f"Uploaded Space https://huggingface.co/spaces/{space_id}")
+
+              api.create_repo(dataset_id, repo_type="dataset", exist_ok=True)
+              api.upload_folder(
+                  folder_path="hf-dataset",
+                  repo_id=dataset_id,
+                  repo_type="dataset",
+                  commit_message="Sync dataset from GitHub",
+              )
+              print(f"Uploaded dataset https://huggingface.co/datasets/{dataset_id}")
+          except HfHubHTTPError as exc:
+              body = exc.response.text[:800] if exc.response is not None else str(exc)
+              print(f"::error::Hugging Face upload failed ({exc}). Response: {body}")
+              sys.exit(1)
+          PY

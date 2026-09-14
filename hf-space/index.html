@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VCL AI Coding Power Prompts — Claude, Codex, Gemini &amp; Cursor</title>
+  <meta name="description" content="50 free AI coding power prompts for Claude Code, Codex, Gemini CLI, and Cursor. Filter, copy, and ship — by Vibe Coder's Life.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px; }
+    .filters select {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .card h3 { font-size: 16px; margin-bottom: 6px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .chip {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .chip.on { color: var(--accent); border-color: #2a3a12; background: #1a2a0a; }
+    .expected { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    details.prompt-box { margin-top: 8px; }
+    details.prompt-box summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="kicker">Vibe Coder's Life</p>
+    <h1>VCL AI Coding Power Prompts</h1>
+    <p class="slogan">50 prompts. Four tools. Free catalog.</p>
+    <p class="lead">Copy-paste prompts for <strong>Claude Code</strong>, <strong>Codex</strong>, <strong>Gemini CLI</strong>, and <strong>Cursor</strong>. Replace <code>{{PLACEHOLDERS}}</code> with your facts. Includes optional drop-in rules starters on GitHub.</p>
+    <div class="callout">
+      <strong>General vibe-coding workflows</strong> — not the paid Apify Playbook prompt pack. A few Apify <em>teaser</em> prompts point at public Store patterns only.
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="#catalog">Browse prompts</a>
+      <a class="btn" href="https://github.com/kondasviktor/vcl-ai-coding-prompts">Star on GitHub</a>
+      <a class="btn" href="https://huggingface.co/datasets/kondasviktor/vcl-ai-coding-prompts">Dataset</a>
+      <a class="btn" href="https://vibecoderslife.com/?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=coding-prompts#subscribe-email">Subscribe</a>
+    </div>
+  </header>
+
+  <section id="catalog">
+    <h2>Prompt catalog (50)</h2>
+    <p class="note">Filter by tool, category, or search. Expand a card to copy the full prompt.</p>
+    <div class="filters">
+      <label class="visually-hidden" for="tool-filter" style="position:absolute;left:-9999px">Tool</label>
+      <select id="tool-filter" aria-label="Filter by tool">
+        <option value="">All tools</option>
+        <option value="claude">Claude</option>
+        <option value="codex">Codex</option>
+        <option value="gemini">Gemini</option>
+        <option value="cursor">Cursor</option>
+      </select>
+      <label class="visually-hidden" for="category-filter" style="position:absolute;left:-9999px">Category</label>
+      <select id="category-filter" aria-label="Filter by category">
+        <option value="">All categories</option>
+      </select>
+      <div class="search-wrap" style="margin:0;flex:1;min-width:180px">
+        <input id="catalog-search" type="search" placeholder="Search title, tags, text…" autocomplete="off" aria-label="Search prompts">
+      </div>
+    </div>
+    <div id="catalog-count" class="note"></div>
+    <div id="catalog-root" aria-live="polite">Loading…</div>
+  </section>
+
+  <aside class="cta">
+    <h2>More from Vibe Coder's Life</h2>
+    <p class="note">New prompts and AI coding experiments in the newsletter. Need live scraping APIs? Run Actors on Apify.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://vibecoderslife.com/?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=coding-prompts#subscribe-email">Subscribe free</a>
+      <a class="btn" href="https://apify.com/kondasviktor?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=coding-prompts">Apify Actors</a>
+      <a class="btn" href="https://huggingface.co/datasets/kondasviktor/vcl-ai-coding-prompts">Open dataset</a>
+      <a class="btn" href="https://github.com/kondasviktor/vcl-ai-coding-prompts">Rules starters on GitHub</a>
+    </div>
+  </aside>
+
+  <footer>
+    <p>MIT Space page · CC BY 4.0 prompts · Canonical source: <a href="https://github.com/kondasviktor/vcl-ai-coding-prompts">GitHub</a> · Dataset: <a href="https://huggingface.co/datasets/kondasviktor/vcl-ai-coding-prompts">kondasviktor/vcl-ai-coding-prompts</a></p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
